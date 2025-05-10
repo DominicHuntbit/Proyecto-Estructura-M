@@ -279,6 +279,54 @@ return con;
     public void setEnd(Nodo End) {
         this.End = End;
     }
+
+  /*metodo que busca por el id del cliente en la lista,
+ retorna verdadero si lo encuentra y ademas deja el apuntador
+ p en el dato y retorna falso en  caso de no encontrarlo*/
+     
+    public String BuscarClientes(String id)
+    {  Nodo p=getStart();//colocamos el apuntador al inicio
+    
+       if(IsEmpty()==false)//si hay datos en la lista
+       {
+         String ida;//variable que debemos usar para capturar el id
+         ida=((Clientes)p.getDato()).getIdentificacion();/*tomamos el id del cliente
+         que esta en el nodo para que no haga la pregunta con p en null!! esto
+         NO es necesario en el algoritmo porque es un problema de programacion 
+         de java no del analisis*/
+         
+         while(p!=null&&!(ida.equalsIgnoreCase(id)))
+         {
+             p=p.getSig();//p adelanta en la lista
+             if(p!=null)/*si hay aun datos para tomar otro id, esto 
+                 no lo tenemos que hacer en el algoritmo*/
+                 ida=((Clientes)p.getDato()).getIdentificacion();
+         }//fin mientras
+       }//fin si
+        
+       if(p==null)//recorrio toda la lista y no lo encuentra
+           return "";
+       else//p quedo ubicada en la lista en el dato buscado
+           return "El cliente buscado es:\n" +p.getDato().toString();
+     
+    }//fin buscar
+    
+
+   //el metodo parte de que el nodo p donde se encuentra el cliente devuelve un string mas no el nodo
+    //por ende p siempre es null este metodo devuelve el nodo que contiene al cliente, no solo el texto
+    public Nodo BuscarNodo(String id) {
+    Nodo aux = getStart();
+    while (aux != null) {
+        if (((Clientes) aux.getDato()).getIdentificacion().equalsIgnoreCase(id)) {
+            return aux;
+        }
+        aux = aux.getSig();
+    }
+    return null;
+}
+
+	
+	
     
     
     

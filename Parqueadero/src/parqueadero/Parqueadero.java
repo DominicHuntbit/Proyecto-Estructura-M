@@ -185,6 +185,45 @@ public class Parqueadero
                                                        }//fin caso opManco
                                                    }while(opManco<6);
                                                    break;
+                                              
+                                                case 2: //Lista doble clientes
+                                                         do{
+                                                       opMLDC=Validaciones.LeerInt(objm.MenuLDClientes());
+                                                       switch(opMLDC)
+                                                       {
+                                                       //ingresar cliente a la lista
+                                                        case 1: objLD=objMLDC.Crear(c, objLD);
+                                                              break;
+                                                              
+                                                        //mostrar listado de clientes
+                                                        case 2: texto=objMLDC.MostrarListaDoble(objLD);
+                                                        JOptionPane.showMessageDialog(null, "La Lista Doble de clientes es:\n"+texto);
+                                                        break;
+                                                        
+                                                        //Consultar un cliente especifico\n" 
+                                                        case 3: id=JOptionPane.showInputDialog(null, " Ingrese el Id del cliente a consultar ");
+                                                        JOptionPane.showMessageDialog(null, objLD.BuscarClientes(id));
+                                                        break;
+                                                        
+                                                        //Eliminar un cliente especifico
+                                                        case 4: id=JOptionPane.showInputDialog(null, " Ingrese el Id del cliente a Eliminar ");
+                                                        if(objLD.LiberarDato(id)){
+                                                        JOptionPane.showMessageDialog(null, " Cliente eliminado ");
+                                                        }else{
+                                                            JOptionPane.showMessageDialog(null, "Cliente no encontrado");
+                                                        }
+                                                        break;
+                                                        
+                                                        //Actualizar un cliente especifico
+                                                        case 5: if(objLD.IsEmpty()==false){  
+                                                         id=Validaciones.LeerString(" Ingrese numero de Id del cliente a actualizar ");
+                                                        objMLDC.BuscarYmodificarCliente(objLD, id);
+                                                             }//if
+                                                          break;
+                                                            }//fin caso opMldc
+                                                   }while(opMLDC<6);
+                                                   break;
+                                                   
                                             case 7://pila de servicios
                                                    do{
                                                        opManPi=Validaciones.LeerInt(objm.MenuPilaServicios());

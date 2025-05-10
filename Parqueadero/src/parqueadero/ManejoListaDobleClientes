@@ -1,0 +1,143 @@
+package parqueadero;
+//Juan camilo
+//Dominic
+
+import javax.swing.JOptionPane;
+
+public class ManejoListaDobleClientes {
+    
+    
+    //metodo para crear la lista doble de clientes 
+     public ListaDoble Crear(int op, ListaDoble LD)
+    {  //variables
+        String id;//para la lectura del objeto
+        int resp;//ingresar datos si o no
+        Clientes objCl;//puede ser object
+        
+        resp=JOptionPane.showConfirmDialog(null,
+                "¿Ingresar el cliente a la Lista?",
+                "CREANDO LISTA",JOptionPane.YES_NO_OPTION);
+        
+        //ciclo mientras
+        while(resp==JOptionPane.YES_NO_OPTION)//mientras se quiera ingresar datos en la lista
+        {
+           objCl=new Clientes();//para sobreescribir 
+           
+           id=Validaciones.LeerString("Ingrese Su Identificacion:");
+           
+           objCl=objCl.IngresarDatos(id);//obtenemos el objeto de clientes en este caso la identificacion
+           
+           if(op==1)//por inicio
+           {
+               LD.CrearPorInicio(objCl);//se crea el nodo en la lista y se copia el vehiculo
+           }
+           else//si es por final
+           {
+               LD.CrearPorFinal(objCl);//se crea el nodo en la lista y se copia el vehiculo
+           }//fin si
+           
+            resp=JOptionPane.showConfirmDialog(null,
+                "¿Ingresar otro cliente en la lista?",
+                "CREANDO LISTA",JOptionPane.YES_NO_OPTION);
+        }//fin mientras
+        
+        return LD;//variable de retorno
+    }//fin de crear
+     
+     
+   
+     
+     
+
+  
+  public String MostrarListaDoble(ListaDoble LD)
+{  Nodo q=null;
+String texto="";//variable del retorno
+if(LD.IsEmpty()==false)
+{
+q=LD.getStart();
+while(q!=null)
+{
+	texto=texto+q.getDato()+"\n";
+     	q=q.getSig();//adelantar en la lista
+}//fin mientras
+}//fin si
+return texto;
+}//fin juntar desde inicio
+  
+  
+  
+  public ListaDoble BuscarYmodificarCliente(ListaDoble LD, String id){
+      if(LD.IsEmpty()==false){ //no esta vacia
+         Nodo p=LD.getStart(); //incializa el apuntador p en el inicio de la lista
+         boolean encontrado=false; //para saber si encontro el vehiculo
+         
+         
+         //recorre la lista buscando el vehiculo por su placa
+         while(p!=null){
+            Clientes Cl=(Clientes)p.getDato(); //obtiene el objeto Clientes en el nodo actual
+            
+            //si la placa buscada coincide con la placa buscada
+            if(Cl.getIdentificacion().equalsIgnoreCase(id)){
+                encontrado=true;
+               
+                // Opciones para modificar los datos del vehículo
+                String[] opciones = {"Nombre", "Apellido", "Telefono", "Direccion","Cancelar"};
+                int opcion = 0;
+                
+                //menu para elegir que modificar
+                while(opcion!=4){
+                     // Muestra un cuadro de diálogo para que el usuario elija qué desea modificar
+                    opcion = JOptionPane.showOptionDialog(null, 
+                        "¿Qué desea modificar?", "Modificar Cliente",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                    
+                    //segun la opcion seleccionada
+                    switch(opcion){
+                        case 0: //modificar nombre
+                            String nuevoNombre=JOptionPane.showInputDialog("Ingrese por favor su nombre");
+                            Cl.setNombre(nuevoNombre);
+                            break;
+                            
+                        case 1: //modificar Apellido
+                            String nuevoApe=JOptionPane.showInputDialog("Ingrese por favor su apellido");
+                            Cl.setApellidos(nuevoApe);
+                            break;
+                            
+                        case 2: //modificar Telefono
+                            String nuevoTel=JOptionPane.showInputDialog("Ingrese por favor su telefono");
+                            Cl.setTelefono(nuevoTel);
+                        default:
+                       break; //usuario cancelo
+                         
+
+                        }//fin del switch
+                      }//fin del while
+                        JOptionPane.showMessageDialog(null,"Los datos fueron registrados y cambiados exitosamente");
+                        break; //sale del ciclo por que ya se encontro el cliente
+                
+                    }//fin del while
+                
+                    p=p.getSig(); //adelantamos al siguiente nodo
+                    
+                }//fin if
+            
+            //si no se encuentra el cliente
+            if(!encontrado){
+                JOptionPane.showMessageDialog(null,"No se encontro el cliente especificado");
+                  }//fin if 
+           
+     
+               }else{
+              //si la lista esta vacia
+              JOptionPane.showMessageDialog(null,"La lista esta vacia");    
+                }//fin else
+               return LD;
+                        
+         }//fin metodo
+  
+  
+  
+
+     
+}
